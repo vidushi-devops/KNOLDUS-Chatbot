@@ -36,8 +36,6 @@ pipeline {
         } 
       }
      }
-   }
-    stages ("Deployment Stage"){
     stage('Deploying to kubernetes') {
       when {
        anyOf { branch 'master'; branch 'feature' }
