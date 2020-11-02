@@ -16,12 +16,17 @@ pipeline {
     }
     }
    }
-    stages{
-     stage('Building Image')
-       {steps{
-         script{
-           echo "Building Docker image"
-           dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+   stage("Docker"){
+      when{
+        branch 'master' 
+          }
+     stages{
+       stage('Building Image')
+       {
+        steps{
+          script{
+            echo "Building Docker image"
+            dockerImage = docker.build registry + ":$BUILD_NUMBER" 
           }
            }
           }
@@ -36,6 +41,11 @@ pipeline {
         } 
       }
      }
+    stage ("Removing local image"){
+      steps{
+        sh 'docker rmi $registry:$BUILD_NUMBER'
+      }
+    }
     stage('Deploying to kubernetes') {
       when {
        anyOf { branch 'master'; branch 'feature' }
