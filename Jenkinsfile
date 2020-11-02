@@ -15,7 +15,7 @@ pipeline {
       echo "Development Stage"
     }
     }
-   }
+   
    stage("Docker"){
       when{
         branch 'master' 
@@ -56,7 +56,7 @@ pipeline {
      }
     }
   }
-  
+}  
 post {
      always {
          echo "Completed"
@@ -73,5 +73,4 @@ post {
 
       }
    }
-
-
+}
