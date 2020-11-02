@@ -37,7 +37,7 @@ pipeline {
       }
      
     }
-  }
+  
 post {
      always {
          echo "Completed"
@@ -52,5 +52,6 @@ post {
           subject: "Unsuccessful Completion of ${env.JOB_NAME}",
           body: "${env.JOB_NAME} has failed. Refer to: ${env.BUILD_URL}"
 
-      }}
-  }
+      }
+   }
+}
