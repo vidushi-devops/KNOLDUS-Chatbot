@@ -13,6 +13,7 @@ pipeline {
       }
       echo "Development Stage"
     }
+   }
     stages{
      stage('Building Image')
        steps{
