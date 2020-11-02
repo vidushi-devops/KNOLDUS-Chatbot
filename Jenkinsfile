@@ -6,10 +6,13 @@ pipeline {
     dockerImage = ''
   }
   agent any
+  stages {
   stage ('Development'){
     when{
        branch 'feature'
       }
+      echo "Development Stage"
+    }
     stages{
      stage('Building Image')
        steps{
@@ -18,7 +21,6 @@ pipeline {
            dockerImage = docker.build registry + ":$BUILD_NUMBER" 
           }
           }
-      }
      stage('Push Docker Image'){
        steps{
          script{
@@ -31,11 +33,12 @@ pipeline {
       }
      }
    }
+    stages ("Deployment Stage"){
     stage('Deploying to kubernetes') {
       when {
        anyOf { branch 'master'; branch 'feature' }
       }
-     
+     }
     }
   
 post {
