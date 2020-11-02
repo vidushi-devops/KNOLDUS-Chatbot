@@ -7,20 +7,23 @@ pipeline {
   }
   agent any
   stages {
-  stage ('Development'){
-    when{
+    stage ('Development'){
+     when{
        branch 'feature'
       }
+    steps{
       echo "Development Stage"
+    }
     }
    }
     stages{
      stage('Building Image')
-       steps{
+       {steps{
          script{
            echo "Building Docker image"
            dockerImage = docker.build registry + ":$BUILD_NUMBER" 
           }
+           }
           }
      stage('Push Docker Image'){
        steps{
@@ -38,6 +41,9 @@ pipeline {
     stage('Deploying to kubernetes') {
       when {
        anyOf { branch 'master'; branch 'feature' }
+      }
+      steps {
+       echo "Deployment Stage"
       }
      }
     }
