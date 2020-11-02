@@ -36,7 +36,6 @@ pipeline {
           echo "Pushing Docker image"
           docker.withRegistry( '',registryCredential ){
           dockerImage.push()
-          sh 'docker rmi $registry:$BUILD_NUMBER'
           }
         } 
       }
