@@ -42,13 +42,13 @@ INSERT INTO `user` (`input`, `output`, `time`, `id`, `title`) VALUES
 
 ('hi', 'Hello. How Can I Help You?', '2020-11-04 14:37:00', 1, NULL),
 ('blog','Knoldus Blogs\r\n\r\nhttps://blog.knoldus.com/', '2020-11-04 00:00:00', '0', 'Blogs'),
-('technology' , 'https://www.knoldus.com/work/technologies' , '2020-11-04 00:00:00', '0','Technology')
+('technology' , 'https://www.knoldus.com/work/technologies' , '2020-11-04 00:00:00', '0','Technology'),
 ('help', 'HelpLine: 8171073907 Or \r\n\r\nhttps://www.knoldus.com/connect/contact-us\r\n\r\n', '2020-11-04 12:15:57', 4, 'Help'),
 ('thanks', 'You are most welcome. How Can I Help You?', '2020-11-04 20:52:07', 21, NULL),
 ('ok', 'Ok', '2020-11-04 22:32:23', 24, NULL),
 ('hey', 'Hello! ', '2017-08-24 00:21:01', 25, NULL),
 ('website', 'https://www.knoldus.com/home', '2020-11-04 20:05:43', 26, 'Website'),
-('hello', 'Hi. How Can I Help You ?', '2020-11-04 12:24:55', 27, NULL),
+('hello', 'Hi. How Can I Help You ?', '2020-11-04 12:24:55', 27, NULL);
 
 --
 -- Indexes for dumped tables
