@@ -85,14 +85,7 @@ pipeline {
                 clusterName: env.CLUSTER_NAME,
                 location: env.LOCATION,
                 manifestPattern: 'cloud-generic.yaml',
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
-        step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'ingress.yaml',
+                namespace: ingress-nginx,
                 credentialsId: env.CREDENTIALS_ID,
                 verifyDeployments: true])
         step([
