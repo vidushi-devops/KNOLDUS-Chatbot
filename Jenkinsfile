@@ -51,14 +51,14 @@ pipeline {
       }
       steps {
        echo "Deployment Stage"
-        kubectl apply -f php-deployment.yaml
-        kubectl apply -f mandatory.yaml
-        kubectl apply -f cloud-generic.yaml
-        kubectl apply -f ingress.yaml
-        kubectl apply -f storageclass.yaml
-        kubectl apply -f mysql-config-map.yaml
-        kubectl apply -f mysql-service.yaml
-        kubectl apply -f mysql-statefulset.yaml
+       sh "kubectl apply -f php-deployment.yaml"
+       sh "kubectl apply -f mandatory.yaml"
+       sh "kubectl apply -f cloud-generic.yaml"
+       sh "kubectl apply -f ingress.yaml"
+       sh "kubectl apply -f storageclass.yaml"
+       sh "kubectl apply -f mysql-config-map.yaml"
+       sh "kubectl apply -f mysql-service.yaml"
+       sh "kubectl apply -f mysql-statefulset.yaml"
       }
      }
     }
