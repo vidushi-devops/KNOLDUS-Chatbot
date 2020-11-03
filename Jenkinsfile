@@ -51,6 +51,7 @@ pipeline {
       }
       steps {
        echo "Deployment Stage"
+        kubectl create -f kubernetes/
       }
      }
     }
