@@ -71,23 +71,6 @@ pipeline {
                 manifestPattern: 'php-deployment.yaml',
                 credentialsId: env.CREDENTIALS_ID,
                 verifyDeployments: true])
-      step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'mandatory.yaml',
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
-        step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'cloud-generic.yaml',
-                namespace: ingress-nginx,
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
         step([
                 $class: 'KubernetesEngineBuilder',
                 projectId: env.PROJECT_ID,
