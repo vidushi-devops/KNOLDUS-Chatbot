@@ -4,6 +4,10 @@ pipeline {
     registry = "vidushi0808/chatbot"
     registryCredential = 'docker-hub'
     dockerImage = ''
+     PROJECT_ID = 'k8pro-292409'
+     CLUSTER_NAME = 'cluster-1'
+     LOCATION = 'us-central1-c'
+     CREDENTIALS_ID = 'k8pro'
   }
   agent any
   stages {
@@ -51,15 +55,88 @@ pipeline {
       }
       steps {
        echo "Deployment Stage"
-       sh "kubectl apply -f php-deployment.yaml"
-       sh "kubectl apply -f mandatory.yaml"
-       sh "kubectl apply -f cloud-generic.yaml"
-       sh "kubectl apply -f ingress.yaml"
-       sh "kubectl apply -f storageclass.yaml"
-       sh "kubectl apply -f mysql-config-map.yaml"
-       sh "kubectl apply -f mysql-service.yaml"
-       sh "kubectl apply -f mysql-statefulset.yaml"
-      }
+      // sh "kubectl apply -f php-deployment.yaml"
+      // sh "kubectl apply -f mandatory.yaml"
+     //  sh "kubectl apply -f cloud-generic.yaml"
+     //  sh "kubectl apply -f ingress.yaml"
+     //  sh "kubectl apply -f storageclass.yaml"
+     //  sh "kubectl apply -f mysql-config-map.yaml"
+     //  sh "kubectl apply -f mysql-service.yaml"
+     //  sh "kubectl apply -f mysql-statefulset.yaml"
+       step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'php-deployment.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+      step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'mandatory.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+        step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'cloud-generic.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+        step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'ingress.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+        step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'storageclass.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+        step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'mysql-config-map.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+        step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'storageclass.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+        step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'mysql-service.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+        step([
+                $class: 'KubernetesEngineBuilder',
+                projectId: env.PROJECT_ID,
+                clusterName: env.CLUSTER_NAME,
+                location: env.LOCATION,
+                manifestPattern: 'mysql-statefulset.yaml',
+                credentialsId: env.CREDENTIALS_ID,
+                verifyDeployments: true])
+       
+       }
      }
     }
   }
