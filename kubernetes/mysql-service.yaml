@@ -1,0 +1,43 @@
+# Headless service for stable DNS entries of StatefulSet members.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: webapp-sql
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+  clusterIP: None
+  selector:
+    app: webapp-sql
+---
+# Client service for connecting to any MySQL instance for reads.
+# For writes, you must instead connect to the master: mysql-0.mysql.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-read
+  labels:
+    app: webapp-sql
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+  selector:
+    app: webapp-sql
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: webapp-sql
+  ports:
+  - protocol: "TCP"
+    port: 3306
+    targetPort: 3306
+

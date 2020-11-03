@@ -2,8 +2,9 @@
 
 $host = "mysql-service";
 $user = "root";
-$pass = "password";
-$db = "chat";
+$pass = '';
+
+//$db = "chat";
 
 $con= mysqli_connect($host,$user,$pass,$db);
 
