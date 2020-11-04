@@ -13,7 +13,7 @@ pipeline {
   stages {
    stage("Development"){
       when{
-        branch 'feature' 
+        branch 'development' 
           }
      stages{
        stage('Building Image')
