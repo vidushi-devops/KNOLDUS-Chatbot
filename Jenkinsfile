@@ -13,14 +13,14 @@ pipeline {
   stages {
    stage("Development"){
       when{
-        branch 'feature' 
+        branch 'development' 
           }
      stages{
        stage('Building Image')
        {
         steps{
           script{
-            echo "###############3333Building Docker image########################"
+            echo "#################Building Docker image########################"
             dockerImage = docker.build registry + ":$BUILD_NUMBER" 
           }
            }
