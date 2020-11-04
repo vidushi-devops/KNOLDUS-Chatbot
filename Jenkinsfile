@@ -40,6 +40,8 @@ pipeline {
         sh 'docker rmi $registry:$BUILD_NUMBER'
       }
     }
+   }
+}
     stage('Deploying to kubernetes') {
       when { 
            branch 'master'
@@ -56,9 +58,7 @@ pipeline {
                 verifyDeployments: true])
        }
      }
-    }
-  }
-}  
+    } 
 post {
      always {
          echo "Completed"
