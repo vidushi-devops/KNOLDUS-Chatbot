@@ -1,5 +1,5 @@
 pipeline {
-  // Declaring environment variables for docker credentials.
+  // Declaring environment variables for docker and kubernetes credentials.
   environment{
     registry = "vidushi0808/chatbot"
     registryCredential = 'docker-hub'
@@ -11,25 +11,16 @@ pipeline {
   }
   agent any
   stages {
-    stage ('Development'){
-     when{
-       branch 'feature'
-      }
-    steps{
-      echo "Development Stage"
-    }
-    }
-   
-   stage("Docker"){
+   stage("Development"){
       when{
-        branch 'master' 
+        branch 'feature' 
           }
      stages{
        stage('Building Image')
        {
         steps{
           script{
-            echo "Building Docker image"
+            echo "###############3333Building Docker image########################"
             dockerImage = docker.build registry + ":$BUILD_NUMBER" 
           }
            }
@@ -37,7 +28,7 @@ pipeline {
      stage('Push Docker Image'){
        steps{
          script{
-          echo "Pushing Docker image"
+          echo "####################Pushing Docker image############################"
           docker.withRegistry( '',registryCredential ){
           dockerImage.push()
           }
@@ -54,15 +45,7 @@ pipeline {
        anyOf { branch 'master'; branch 'feature' }
       }
       steps {
-       echo "Deployment Stage"
-      // sh "kubectl apply -f php-deployment.yaml"
-      // sh "kubectl apply -f mandatory.yaml"
-     //  sh "kubectl apply -f cloud-generic.yaml"
-     //  sh "kubectl apply -f ingress.yaml"
-     //  sh "kubectl apply -f storageclass.yaml"
-     //  sh "kubectl apply -f mysql-config-map.yaml"
-     //  sh "kubectl apply -f mysql-service.yaml"
-     //  sh "kubectl apply -f mysql-statefulset.yaml"
+       echo "#################Deployment Stage#####################"
        step([
                 $class: 'KubernetesEngineBuilder',
                 projectId: env.PROJECT_ID,
@@ -71,47 +54,6 @@ pipeline {
                 manifestPattern: 'php-deployment.yaml',
                 credentialsId: env.CREDENTIALS_ID,
                 verifyDeployments: true])
-        step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'storageclass.yaml',
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
-        step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'mysql-config-map.yaml',
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
-        step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'storageclass.yaml',
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
-        step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'mysql-service.yaml',
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
-        step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'mysql-statefulset.yaml',
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
-       
        }
      }
     }
