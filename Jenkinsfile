@@ -41,8 +41,8 @@ pipeline {
       }
     }
     stage('Deploying to kubernetes') {
-      when {
-       anyOf { branch 'master'; branch 'feature' }
+      when { 
+           branch 'master'
       }
       steps {
        echo "#################Deployment Stage#####################"
