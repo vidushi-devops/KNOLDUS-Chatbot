@@ -20,7 +20,7 @@ pipeline {
        {
         steps{
           script{
-            echo "###############3333Building Docker image########################"
+            echo "#################Building Docker image########################"
             dockerImage = docker.build registry + ":$BUILD_NUMBER" 
           }
            }
