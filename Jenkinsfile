@@ -19,7 +19,7 @@ pipeline {
        stage('Testing')
        {
         steps{
-          sh 'cd Test'
+          sh 'cd test'
           sh './test.sh'
          }
        }
