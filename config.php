@@ -1,10 +1,10 @@
 <?php
 
-$host = "mysql-service";
+$host = "mysql-service.backend";
 $user = "root";
 $pass = '';
 
-//$db = "chat";
+$db = "chat";
 
 $con= mysqli_connect($host,$user,$pass,$db);
 
