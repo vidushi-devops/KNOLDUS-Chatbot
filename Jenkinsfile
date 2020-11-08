@@ -16,6 +16,13 @@ pipeline {
         branch 'development' 
           }
      stages{
+       stage('Testing')
+       {
+        steps{
+          sh 'cd Test'
+          sh './test.sh'
+         }
+       }
        stage('Building Image')
        {
         steps{
