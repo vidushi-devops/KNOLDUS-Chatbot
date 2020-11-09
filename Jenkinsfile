@@ -8,7 +8,6 @@ pipeline {
      CLUSTER_NAME = 'cluster-1'
      LOCATION = 'us-central1-c'
      CREDENTIALS_ID = 'k8pro'
-     RESULT = 0
   }
   agent any
   stages {
@@ -45,7 +44,7 @@ pipeline {
       }
     }
    }
-}
+
     stage('Deploying to kubernetes') {
       when { 
            branch 'master'
@@ -62,7 +61,8 @@ pipeline {
                 verifyDeployments: true])
        }
      }
-    } 
+}
+     
 post {
      always {
          echo "Completed"
