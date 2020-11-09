@@ -4,3 +4,5 @@ do
   echo "Test case $i : Passed"
   sleep 5s
 done
+echo "RESULT=70">result
+
