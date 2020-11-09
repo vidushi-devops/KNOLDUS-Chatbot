@@ -8,6 +8,7 @@ pipeline {
      CLUSTER_NAME = 'cluster-1'
      LOCATION = 'us-central1-c'
      CREDENTIALS_ID = 'k8pro'
+     RESULT = 0
   }
   agent any
   stages {
@@ -19,17 +20,13 @@ pipeline {
        stage('Testing')
        {
         steps{
-          echo "TestCase1: Passed"
-          echo "TestCase2: Passed"
-          echo "TestCase3: Passed"
-          echo "TestCase4: Passed"
-          echo "TestCase5: Passed"
+          sh './test.sh'
           def output = readResult file: 'result'
           env.RESULT = output.RESULT
          }
        }}
       stages{
-       if ($RESULT>70)
+       if (${RESULT} > 70)
        {
         stage('Building Image')
         {
