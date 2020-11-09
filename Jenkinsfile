@@ -21,9 +21,10 @@ pipeline {
        {
         steps{
           sh './test.sh'
-          def output = readResult file: 'result'
-          env.RESULT = output.RESULT
-         }
+          script{
+            def output = readResult file: 'result'
+            env.RESULT = output.RESULT
+         }}
        }}
       stages{
        if (${RESULT} > 70)
