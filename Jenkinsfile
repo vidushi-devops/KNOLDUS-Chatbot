@@ -25,20 +25,21 @@ pipeline {
             def output = readResult file: 'result'
             env.RESULT = output.RESULT
          }}
-       }}
-      stages{
-       if (${RESULT} > 70)
-       {
+       }
         stage('Building Image')
-        {
+        {  
+        if (${RESULT} > 70)
+           {
          steps{
           script{
             echo "#################Building Docker image########################"
             dockerImage = docker.build registry + ":$BUILD_NUMBER" 
           }
            }
-          }
+          }}
      stage('Push Docker Image'){
+       if (${RESULT} > 70)
+       {
        steps{
          script{
           echo "####################Pushing Docker image############################"
@@ -47,9 +48,10 @@ pipeline {
           }
         } 
       }
-     }
+     }}
     stage ("Removing local image"){
-      steps{
+      steps{ if (${RESULT} > 70)
+       {
         sh 'docker rmi $registry:$BUILD_NUMBER'
       }
     }
