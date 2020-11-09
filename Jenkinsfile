@@ -20,15 +20,17 @@ pipeline {
        {
         steps{
           sh './test.sh'
-         }}
-        stage('Building Image')
-        {  
-         steps{
+         }
+       }
+       stage('Building Image')
+       {
+        steps{
           script{
             echo "#################Building Docker image########################"
             dockerImage = docker.build registry + ":$BUILD_NUMBER" 
           }
-           }}
+           }
+          }
      stage('Push Docker Image'){
        steps{
          script{
@@ -40,11 +42,12 @@ pipeline {
       }
      }
     stage ("Removing local image"){
+      steps{
         sh 'docker rmi $registry:$BUILD_NUMBER'
       }
     }
    }
-
+}
     stage('Deploying to kubernetes') {
       when { 
            branch 'master'
@@ -61,8 +64,7 @@ pipeline {
                 verifyDeployments: true])
        }
      }
-}
-     
+    } 
 post {
      always {
          echo "Completed"
