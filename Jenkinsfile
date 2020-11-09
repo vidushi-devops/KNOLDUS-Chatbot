@@ -24,11 +24,16 @@ pipeline {
           echo "TestCase3: Passed"
           echo "TestCase4: Passed"
           echo "TestCase5: Passed"
+          def output = readResult file: 'result'
+          env.RESULT = output.RESULT
          }
-       }
-       stage('Building Image')
+       }}
+      stages{
+       if ($RESULT>70)
        {
-        steps{
+        stage('Building Image')
+        {
+         steps{
           script{
             echo "#################Building Docker image########################"
             dockerImage = docker.build registry + ":$BUILD_NUMBER" 
@@ -50,7 +55,7 @@ pipeline {
         sh 'docker rmi $registry:$BUILD_NUMBER'
       }
     }
-   }
+   }}
 }
     stage('Deploying to kubernetes') {
       when { 
