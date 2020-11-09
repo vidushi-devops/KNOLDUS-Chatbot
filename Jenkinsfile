@@ -41,12 +41,10 @@ pipeline {
       }
      }
     stage ("Removing local image"){
-      steps{ if (${RESULT} > 70)
-       {
         sh 'docker rmi $registry:$BUILD_NUMBER'
       }
     }
-   }}
+   }
 }
     stage('Deploying to kubernetes') {
       when { 
