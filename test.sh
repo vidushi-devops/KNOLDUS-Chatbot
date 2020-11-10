@@ -4,5 +4,13 @@ do
   echo "Test case $i : Passed"
   sleep 5s
 done
-echo "RESULT=70">result
+n=80
+if [ $n -ge 70 ]
+then
+	echo "$n % Test cases passed successfully. Moving Ahead!!"
+	exit 0
+else
+	echo "Only $n % test cases passed. Aborting!!"
+	exit 1
+fi
 
